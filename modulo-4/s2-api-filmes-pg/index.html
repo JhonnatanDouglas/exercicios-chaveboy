@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S2 - API Filmes PG</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../s1-api-mercado/index.html">Anterior</a><a href="../s3-kenzievelopers/index.html">Proxima</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 2</div>
+        <h1>Locadora de Filmes com PostgreSQL</h1>
+        <p class="lead">Crie uma API REST para cadastrar, listar, atualizar e deletar filmes usando PostgreSQL, Express e TypeScript.</p>
+        <div class="tagrow"><span class="tag">Express</span><span class="tag">PostgreSQL</span><span class="tag">pg</span><span class="tag">pg-format</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code>: servidor e rotas.</li>
+          <li><code>typescript</code> e <code>ts-node-dev</code>: desenvolvimento em TypeScript.</li>
+          <li><code>pg</code>: conexao e queries no PostgreSQL.</li>
+          <li><code>pg-format</code>: montagem segura de updates dinamicos.</li>
+          <li><code>dotenv</code>: leitura do <code>DATABASE_URL</code>.</li>
+          <li><code>@types/express</code>, <code>@types/pg</code> e <code>@types/pg-format</code>: tipos.</li>
+        </ul>
+
+        <h2>Tabela</h2>
+        <pre><code>CREATE TABLE movies (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL UNIQUE,
+  category VARCHAR(20) NOT NULL,
+  duration INTEGER NOT NULL,
+  price INTEGER NOT NULL
+);</code></pre>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/movies</code></td><td>Criar filme</td></tr>
+          <tr><td>GET</td><td><code>/movies</code></td><td>Listar filmes; aceitar <code>?category=</code></td></tr>
+          <tr><td>GET</td><td><code>/movies/:id</code></td><td>Buscar por id</td></tr>
+          <tr><td>PATCH</td><td><code>/movies/:id</code></td><td>Atualizar parcialmente</td></tr>
+          <tr><td>DELETE</td><td><code>/movies/:id</code></td><td>Deletar</td></tr>
+        </tbody></table>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Configure projeto, scripts e <code>.env</code> com <code>DATABASE_URL</code>.</li>
+          <li>Crie <code>sql/create_table.sql</code> com a tabela movies.</li>
+          <li>Crie <code>database.ts</code> com <code>Pool</code> do <code>pg</code> e funcao para iniciar tabela.</li>
+          <li>Crie <code>app.ts</code> com Express e suba o banco antes do servidor.</li>
+          <li>Crie POST <code>/movies</code> usando query parametrizada.</li>
+          <li>Crie middleware para bloquear <code>name</code> duplicado.</li>
+          <li>Crie GET geral e filtro por <code>?category=</code>.</li>
+          <li>Crie middleware para id inexistente.</li>
+          <li>Crie GET por id, PATCH dinamico e DELETE.</li>
+          <li>Teste todos os fluxos no Insomnia ou Thunder Client.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li><code>name</code>, <code>category</code>, <code>duration</code> e <code>price</code> sao obrigatorios no POST.</li>
+          <li><code>name</code> deve ser unico.</li>
+          <li>Id inexistente retorna 404 com mensagem clara.</li>
+          <li>PATCH nao deve exigir todos os campos.</li>
+          <li>GET <code>/movies?category=acao</code> deve filtrar; se nao encontrar, pode retornar lista vazia.</li>
+        </ul>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Tabela criada no banco.</label>
+          <label><input type="checkbox" data-key="c2" />POST cria filme e bloqueia nome duplicado.</label>
+          <label><input type="checkbox" data-key="c3" />GET por id funciona.</label>
+          <label><input type="checkbox" data-key="c4" />PATCH altera nome sem perder outros campos.</label>
+          <label><input type="checkbox" data-key="c5" />DELETE remove do banco.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

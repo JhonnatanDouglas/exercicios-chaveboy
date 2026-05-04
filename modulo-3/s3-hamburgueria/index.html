@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M3 S3 - Hamburgueria</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell">
+        <a class="brand" href="../../index.html">Guias de Exercicios</a>
+        <nav class="nav"><a href="../s2-nu-kenzie/index.html">Anterior</a><a href="../s4-kenzie-hub/index.html">Proxima</a></nav>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 3 - Front React - Sprint 3</div>
+        <h1>Hamburgueria</h1>
+        <p class="lead">Crie uma vitrine de produtos com busca e carrinho. Nao existe layout oficial aqui: faca uma tela limpa, responsiva e facil de usar.</p>
+        <div class="tagrow"><span class="tag">React</span><span class="tag">API publica</span><span class="tag">useEffect</span><span class="tag">localStorage</span></div>
+      </section>
+
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>react</code> e <code>react-dom</code>: base da aplicacao.</li>
+          <li><code>vite</code> e <code>@vitejs/plugin-react</code>: criacao e execucao do projeto.</li>
+          <li><code>axios</code> ou <code>fetch</code>: consumo da API de produtos.</li>
+          <li><code>react-toastify</code>: opcional, para mensagens de erro e sucesso.</li>
+          <li><code>styled-components</code>: opcional, para organizar o CSS por componente.</li>
+        </ul>
+
+        <h2>API que deve usar</h2>
+        <p>Use DummyJSON Products no lugar da API antiga. Ela e simples, gratuita e retorna produtos com nome, preco, categoria e imagem.</p>
+        <pre><code>GET https://dummyjson.com/products
+GET https://dummyjson.com/products/search?q=phone
+GET https://dummyjson.com/products/category-list</code></pre>
+        <p>Campos principais: <code>id</code>, <code>title</code>, <code>category</code>, <code>price</code>, <code>thumbnail</code>.</p>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Crie o projeto React e monte o header com nome, busca e botao do carrinho.</li>
+          <li>Crie no <code>App</code> os estados <code>products</code>, <code>cart</code>, <code>search</code>, <code>loading</code> e <code>error</code>.</li>
+          <li>No <code>useEffect</code> inicial, busque <code>https://dummyjson.com/products</code>.</li>
+          <li>Enquanto carrega, mostre loading. Se der erro, mostre uma mensagem simples.</li>
+          <li>Renderize cards com <code>thumbnail</code>, <code>title</code>, <code>category</code>, <code>price</code> e botao adicionar.</li>
+          <li>Implemente a busca. Primeiro pode filtrar localmente; depois, se quiser, use <code>/products/search?q=texto</code>.</li>
+          <li>Ao adicionar produto, verifique se ele ja existe no carrinho. Se existir, aumente <code>quantity</code>.</li>
+          <li>Crie o carrinho com lista de itens, quantidade, remover item, limpar tudo e total.</li>
+          <li>Salve o carrinho no <code>localStorage</code> sempre que ele mudar.</li>
+          <li>Finalize responsivo e garanta que produto, busca e carrinho sejam usaveis no celular.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>A aplicacao precisa consumir uma API publica real.</li>
+          <li>Erro de API deve mostrar uma mensagem amigavel, nao tela quebrada.</li>
+          <li>O carrinho precisa mostrar quantidade e total em reais.</li>
+          <li>A busca precisa informar quando nao encontrou nenhum produto.</li>
+          <li>O layout precisa funcionar no celular e no desktop.</li>
+        </ul>
+
+        <h2>Componentes sugeridos</h2>
+        <ul>
+          <li><code>Header</code>: logo, busca e quantidade de itens.</li>
+          <li><code>ProductList</code>: recebe produtos e renderiza cards.</li>
+          <li><code>ProductCard</code>: card individual.</li>
+          <li><code>Cart</code>: lista itens, total e limpar carrinho.</li>
+          <li><code>CartItem</code>: item individual com remover.</li>
+        </ul>
+
+        <h2>Teste manual</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />A pagina carrega produtos da API.</label>
+          <label><input type="checkbox" data-key="c2" />A busca por <code>phone</code> reduz a lista.</label>
+          <label><input type="checkbox" data-key="c3" />Adicionar o mesmo produto duas vezes aumenta a quantidade.</label>
+          <label><input type="checkbox" data-key="c4" />Atualizar a pagina mantem o carrinho.</label>
+          <label><input type="checkbox" data-key="c5" />Limpar carrinho zera itens e total.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

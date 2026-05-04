@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M3 S4 - Kenzie Hub</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell">
+        <a class="brand" href="../../index.html">Guias de Exercicios</a>
+        <nav class="nav"><a href="../s3-hamburgueria/index.html">Anterior</a><a href="../../index.html">Inicio</a></nav>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 3 - Front React - Sprint 4</div>
+        <h1>Kenzie Hub</h1>
+        <p class="lead">Crie uma aplicacao com login, cadastro visual, rota protegida e dashboard onde o usuario controla suas tecnologias.</p>
+        <div class="tagrow"><span class="tag">React Router</span><span class="tag">formularios</span><span class="tag">zod opcional</span><span class="tag">context opcional</span></div>
+      </section>
+
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>react</code> e <code>react-dom</code>: base da aplicacao.</li>
+          <li><code>vite</code> e <code>@vitejs/plugin-react</code>: criacao e execucao do projeto.</li>
+          <li><code>react-router-dom</code>: rotas publicas e protegidas.</li>
+          <li><code>react-hook-form</code> e <code>zod</code>: validacao dos formularios.</li>
+          <li><code>@hookform/resolvers</code>: liga zod ao react-hook-form.</li>
+          <li><code>axios</code> ou <code>fetch</code>: login na API.</li>
+          <li><code>react-modal</code> e <code>react-toastify</code>: opcionais para modal e mensagens.</li>
+        </ul>
+
+        <h2>Referencia visual</h2>
+        <p>Use este link como guia de layout: <a href="https://kenzie-hub-react-red.vercel.app/" target="_blank">Kenzie Hub publicado</a>.</p>
+
+        <h2>API que deve usar</h2>
+        <p>Use DummyJSON Auth para login. Para as tecnologias, use estado local e <code>localStorage</code>; assim o aluno nao depende de uma API complexa para CRUD.</p>
+        <pre><code>POST https://dummyjson.com/auth/login
+body:
+{
+  "username": "emilys",
+  "password": "emilyspass"
+}</code></pre>
+        <p>Depois do login, salve <code>accessToken</code> e dados do usuario no <code>localStorage</code>.</p>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Crie o projeto e configure as paginas <code>Login</code>, <code>Register</code> e <code>Dashboard</code>.</li>
+          <li>Configure o roteamento. Login e cadastro sao publicos; dashboard e protegido.</li>
+          <li>Crie uma funcao para verificar se existe token salvo no <code>localStorage</code>.</li>
+          <li>Monte o formulario de login com validacao de campos vazios.</li>
+          <li>No login, envie <code>username</code> e <code>password</code> para DummyJSON Auth.</li>
+          <li>Se der certo, salve <code>accessToken</code> e dados do usuario; depois navegue para dashboard.</li>
+          <li>Se der errado, mostre erro claro e mantenha o usuario na tela de login.</li>
+          <li>Monte o dashboard com dados do usuario, botao logout e lista de tecnologias.</li>
+          <li>Crie modal ou formulario para adicionar tecnologia com nome e nivel.</li>
+          <li>Implemente editar nivel, excluir tecnologia e persistir tudo no <code>localStorage</code>.</li>
+          <li>Finalize logout limpando usuario, token e redirecionando para login.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>Usuario sem token nao pode entrar no dashboard.</li>
+          <li>Formulario de login precisa validar campos vazios.</li>
+          <li>Tecnologia precisa ter nome e nivel.</li>
+          <li>Nivel deve ser uma lista fechada: <code>Iniciante</code>, <code>Intermediario</code>, <code>Avancado</code>.</li>
+          <li>As tecnologias devem permanecer apos atualizar a pagina.</li>
+          <li>Use modal ou pagina separada para criar/editar tecnologias.</li>
+        </ul>
+
+        <h2>Teste manual</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Entrar com <code>emilys</code> e <code>emilyspass</code> funciona.</label>
+          <label><input type="checkbox" data-key="c2" />Acessar dashboard sem token redireciona para login.</label>
+          <label><input type="checkbox" data-key="c3" />Criar, editar e excluir tecnologia funciona.</label>
+          <label><input type="checkbox" data-key="c4" />Atualizar a pagina mantem usuario e tecnologias.</label>
+          <label><input type="checkbox" data-key="c5" />Logout limpa a sessao.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

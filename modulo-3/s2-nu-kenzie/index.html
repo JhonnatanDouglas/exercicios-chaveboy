@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M3 S2 - Nu Kenzie</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell">
+        <a class="brand" href="../../index.html">Guias de Exercicios</a>
+        <nav class="nav"><a href="../../index.html">Inicio</a><a href="../s3-hamburgueria/index.html">Proxima</a></nav>
+      </div>
+    </header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 3 - Front React - Sprint 2</div>
+        <h1>Nu Kenzie</h1>
+        <p class="lead">Crie uma aplicacao React para controlar entradas e despesas. O usuario cadastra valores, ve o total e remove itens da lista.</p>
+        <div class="tagrow"><span class="tag">React</span><span class="tag">useState</span><span class="tag">props</span><span class="tag">styled-components opcional</span></div>
+      </section>
+
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>react</code> e <code>react-dom</code>: base da aplicacao.</li>
+          <li><code>vite</code> e <code>@vitejs/plugin-react</code>: criacao e servidor do projeto.</li>
+          <li><code>styled-components</code>: opcional, para estilizar como componentes.</li>
+          <li><code>uuid</code> ou <code>crypto.randomUUID()</code>: para gerar ids dos lancamentos.</li>
+        </ul>
+
+        <h2>Referencia visual</h2>
+        <p>Use este link apenas como guia de layout: <a href="https://nu-kenzie-plum-seven.vercel.app/" target="_blank">Nu Kenzie publicado</a>.</p>
+        <p>Voce nao precisa copiar pixel por pixel. Precisa entregar a mesma ideia: formulario de cadastro, resumo de total e lista de lancamentos.</p>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Crie o projeto com Vite e limpe a estrutura inicial.</li>
+          <li>Crie o layout base: header no topo, formulario na esquerda e lista na direita.</li>
+          <li>No <code>App</code>, crie o estado <code>transactions</code> como array vazio.</li>
+          <li>Crie o formulario com descricao, valor e tipo. Primeiro faca ele capturar dados, depois faca ele enviar.</li>
+          <li>No envio, valide os campos. Se estiver tudo certo, crie um objeto com <code>id</code>, <code>description</code>, <code>value</code> e <code>type</code>.</li>
+          <li>Adicione o novo objeto no estado sem alterar o array original.</li>
+          <li>Crie o componente de total e calcule: entrada soma, despesa subtrai.</li>
+          <li>Crie a lista de cards e renderize cada lancamento.</li>
+          <li>Crie o botao remover e filtre o item pelo <code>id</code>.</li>
+          <li>Finalize responsivo: no celular, formulario e lista ficam um abaixo do outro.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>O campo descricao e obrigatorio.</li>
+          <li>O campo valor deve ser numerico e maior que zero.</li>
+          <li>O tipo deve ser apenas <code>entrada</code> ou <code>despesa</code>.</li>
+          <li>Cada lancamento precisa ter um <code>id</code> unico. Pode usar <code>crypto.randomUUID()</code>.</li>
+          <li>O total deve atualizar automaticamente ao adicionar ou remover itens.</li>
+          <li>O estado principal deve ficar no componente pai e ser enviado por props para os filhos.</li>
+        </ul>
+
+        <h2>Componentes sugeridos</h2>
+        <ul>
+          <li><code>Header</code>: mostra o nome da aplicacao.</li>
+          <li><code>Form</code>: cadastra descricao, valor e tipo.</li>
+          <li><code>TotalMoney</code>: recebe a lista e calcula o total.</li>
+          <li><code>FinanceList</code>: decide se mostra lista vazia ou cards.</li>
+          <li><code>FinanceCard</code>: mostra um item e o botao remover.</li>
+        </ul>
+
+        <h2>Teste manual</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Cadastrar uma entrada de 100 e ver total 100.</label>
+          <label><input type="checkbox" data-key="c2" />Cadastrar uma despesa de 40 e ver total 60.</label>
+          <label><input type="checkbox" data-key="c3" />Remover a despesa e ver total voltar para 100.</label>
+          <label><input type="checkbox" data-key="c4" />Tentar enviar campo vazio e impedir cadastro.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

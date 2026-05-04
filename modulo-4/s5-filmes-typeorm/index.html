@@ -1,0 +1,99 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S5 - Filmes TypeORM</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../s4-usuarios-cursos/index.html">Anterior</a><a href="../s6-kimoveis/index.html">Proxima</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 5</div>
+        <h1>Locadora de Filmes com TypeORM</h1>
+        <p class="lead">Recrie a API de filmes usando TypeORM, migrations, zod e paginacao. O foco e trocar SQL manual por entidade e repositorio.</p>
+        <div class="tagrow"><span class="tag">TypeORM</span><span class="tag">migrations</span><span class="tag">zod</span><span class="tag">paginacao</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code> e <code>express-async-errors</code>: API e erros async.</li>
+          <li><code>typescript</code> e <code>ts-node-dev</code>: desenvolvimento em TypeScript.</li>
+          <li><code>typeorm</code>, <code>reflect-metadata</code> e <code>pg</code>: ORM e PostgreSQL.</li>
+          <li><code>dotenv</code>: variaveis de ambiente.</li>
+          <li><code>zod</code>: validacao dos dados.</li>
+          <li><code>sqlite3</code>: banco em memoria para testes, se necessario.</li>
+          <li><code>jest</code>, <code>supertest</code> e <code>ts-jest</code>: testes de integracao, se forem exigidos.</li>
+        </ul>
+
+        <h2>Entidade Movie</h2>
+        <ul>
+          <li><code>id</code>: inteiro, primary generated.</li>
+          <li><code>name</code>: varchar 50, unico, obrigatorio.</li>
+          <li><code>description</code>: text, opcional, default null.</li>
+          <li><code>duration</code>: inteiro, obrigatorio.</li>
+          <li><code>price</code>: inteiro, obrigatorio.</li>
+        </ul>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/movies</code></td><td>Criar filme</td></tr>
+          <tr><td>GET</td><td><code>/movies</code></td><td>Listar com paginacao, sort e order</td></tr>
+          <tr><td>PATCH</td><td><code>/movies/:id</code></td><td>Atualizar filme</td></tr>
+          <tr><td>DELETE</td><td><code>/movies/:id</code></td><td>Deletar filme</td></tr>
+        </tbody></table>
+
+        <h2>Paginacao</h2>
+        <p>A rota GET recebe <code>page</code>, <code>perPage</code>, <code>sort</code> e <code>order</code>.</p>
+        <ul>
+          <li><code>page</code>: padrao 1.</li>
+          <li><code>perPage</code>: padrao 5, maximo 5.</li>
+          <li><code>sort</code>: aceita <code>price</code> ou <code>duration</code>. Sem sort, ordene por id.</li>
+          <li><code>order</code>: aceita <code>asc</code> ou <code>desc</code>. Padrao <code>asc</code>.</li>
+        </ul>
+        <pre><code>{
+  "prevPage": null,
+  "nextPage": "http://localhost:3000/movies?page=2&perPage=5",
+  "count": 12,
+  "data": []
+}</code></pre>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Configure TypeScript com decorators e importe <code>reflect-metadata</code>.</li>
+          <li>Configure <code>data-source.ts</code> com PostgreSQL em dev e SQLite em teste, se quiser.</li>
+          <li>Crie entidade <code>Movie</code> e exporte por <code>entities/index.ts</code>.</li>
+          <li>Crie e rode a migration inicial da tabela movies.</li>
+          <li>Crie schemas zod para POST e PATCH; chaves extras devem ser ignoradas.</li>
+          <li>Crie rota POST com validacao de body e nome duplicado.</li>
+          <li>Crie middleware de paginacao para tratar <code>page</code>, <code>perPage</code>, <code>sort</code> e <code>order</code>.</li>
+          <li>Crie GET geral retornando <code>prevPage</code>, <code>nextPage</code>, <code>count</code> e <code>data</code>.</li>
+          <li>Crie middleware de id inexistente para PATCH/DELETE.</li>
+          <li>Finalize PATCH parcial e DELETE usando repository do TypeORM.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>POST deve exigir <code>name</code>, <code>duration</code> e <code>price</code>.</li>
+          <li><code>description</code> e opcional e deve salvar como <code>null</code> se nao vier.</li>
+          <li><code>name</code> deve ser unico.</li>
+          <li>POST e PATCH devem ignorar <code>id</code> enviado pelo cliente.</li>
+          <li>GET deve paginar e limitar <code>perPage</code> a 5.</li>
+          <li>DELETE deve retornar 204 quando remover com sucesso.</li>
+        </ul>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Migration cria tabela movies.</label>
+          <label><input type="checkbox" data-key="c2" />POST ignora id enviado pelo cliente.</label>
+          <label><input type="checkbox" data-key="c3" />PATCH ignora id e aceita campos parciais.</label>
+          <label><input type="checkbox" data-key="c4" />GET retorna prevPage, nextPage, count e data.</label>
+          <label><input type="checkbox" data-key="c5" />Sort por price e duration funciona.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

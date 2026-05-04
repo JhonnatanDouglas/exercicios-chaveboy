@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S4 - Usuarios e Cursos</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../s3-kenzievelopers/index.html">Anterior</a><a href="../s5-filmes-typeorm/index.html">Proxima</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 4</div>
+        <h1>Usuarios, Cursos e Permissao Admin</h1>
+        <p class="lead">Crie uma API com cadastro de usuarios, login JWT, cursos e matriculas. Algumas rotas sao publicas, outras exigem token e admin.</p>
+        <div class="tagrow"><span class="tag">JWT</span><span class="tag">bcrypt</span><span class="tag">zod</span><span class="tag">PostgreSQL</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code> e <code>express-async-errors</code>: API e erros async.</li>
+          <li><code>typescript</code> e <code>ts-node-dev</code>: desenvolvimento em TypeScript.</li>
+          <li><code>pg</code> e <code>pg-format</code>: PostgreSQL e queries dinamicas.</li>
+          <li><code>dotenv</code>: variaveis de ambiente.</li>
+          <li><code>zod</code>: validacao e serializacao.</li>
+          <li><code>bcryptjs</code>: hash e comparacao de senha.</li>
+          <li><code>jsonwebtoken</code>: login com token JWT.</li>
+          <li><code>jest</code>, <code>supertest</code> e <code>ts-jest</code>: testes de integracao, se forem exigidos.</li>
+        </ul>
+
+        <h2>Tabelas</h2>
+        <ul>
+          <li><code>users</code>: id, name, email unico, password hash, admin boolean default false.</li>
+          <li><code>courses</code>: id, name, description.</li>
+          <li><code>userCourses</code>: id, active default true, userId, courseId.</li>
+        </ul>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Protecao</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/users</code></td><td>Publica</td><td>Criar usuario</td></tr>
+          <tr><td>POST</td><td><code>/login</code></td><td>Publica</td><td>Gerar token</td></tr>
+          <tr><td>GET</td><td><code>/users</code></td><td>Admin</td><td>Listar usuarios</td></tr>
+          <tr><td>GET</td><td><code>/users/:id/courses</code></td><td>Admin</td><td>Cursos de um usuario</td></tr>
+          <tr><td>POST</td><td><code>/courses</code></td><td>Admin</td><td>Criar curso</td></tr>
+          <tr><td>GET</td><td><code>/courses</code></td><td>Publica</td><td>Listar cursos</td></tr>
+          <tr><td>POST</td><td><code>/courses/:courseId/users/:userId</code></td><td>Admin</td><td>Matricular usuario</td></tr>
+          <tr><td>GET</td><td><code>/courses/:id/users</code></td><td>Admin</td><td>Usuarios de um curso</td></tr>
+          <tr><td>DELETE</td><td><code>/courses/:courseId/users/:userId</code></td><td>Admin</td><td>Desativar matricula</td></tr>
+        </tbody></table>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Crie SQL das tres tabelas com chaves estrangeiras e <code>ON DELETE CASCADE</code>.</li>
+          <li>Configure conexao, <code>.env</code>, <code>SECRET_KEY</code> e middleware global de erros.</li>
+          <li>Crie schemas zod para usuario, login e curso.</li>
+          <li>Implemente POST <code>/users</code>: validar body, bloquear email duplicado, gerar hash e esconder senha.</li>
+          <li>Implemente POST <code>/login</code>: buscar usuario, comparar senha e gerar JWT.</li>
+          <li>Crie <code>verifyToken</code> para ler Bearer token e salvar dados do usuario logado.</li>
+          <li>Crie <code>validateAdmin</code> e proteja rotas administrativas.</li>
+          <li>Implemente GET <code>/users</code> e GET <code>/users/:id/courses</code>.</li>
+          <li>Implemente POST/GET <code>/courses</code>.</li>
+          <li>Implemente matricula, listagem de usuarios no curso e desativacao com <code>active = false</code>.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>Nunca retornar <code>password</code> nas respostas.</li>
+          <li>Email precisa ser unico e valido.</li>
+          <li>Token ausente, invalido ou mal formatado deve retornar 401.</li>
+          <li>Usuario comum nao pode acessar rotas admin.</li>
+          <li>Uma matricula ja existente nao deve ser duplicada.</li>
+        </ul>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Criar usuario retorna sem password.</label>
+          <label><input type="checkbox" data-key="c2" />Login retorna token valido.</label>
+          <label><input type="checkbox" data-key="c3" />GET /users bloqueia usuario comum.</label>
+          <label><input type="checkbox" data-key="c4" />Admin cria curso e matricula usuario.</label>
+          <label><input type="checkbox" data-key="c5" />DELETE de matricula altera active para false.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

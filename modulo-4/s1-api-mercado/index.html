@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S1 - API Mercado</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../../index.html">Inicio</a><a href="../s2-api-filmes-pg/index.html">Proxima</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 1</div>
+        <h1>API de Mercado Autonomo</h1>
+        <p class="lead">Crie uma API REST em Express e TypeScript para gerenciar produtos de um mercado. Nesta sprint, o banco pode ser um array em memoria.</p>
+        <div class="tagrow"><span class="tag">Node</span><span class="tag">Express</span><span class="tag">TypeScript</span><span class="tag">array em memoria</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code>: criar servidor e rotas.</li>
+          <li><code>typescript</code>: tipagem do projeto.</li>
+          <li><code>ts-node-dev</code>: rodar o servidor em desenvolvimento.</li>
+          <li><code>@types/express</code>: tipos do Express.</li>
+        </ul>
+
+        <h2>Modelo do produto</h2>
+        <pre><code>{
+  "id": 1,
+  "name": "Queijo",
+  "price": 10,
+  "section": "food",
+  "weight": 30,
+  "calories": 300,
+  "expirationDate": "2026-06-01T00:00:00.000Z"
+}</code></pre>
+        <p>Produtos de <code>food</code> usam <code>weight</code>, <code>calories</code> e <code>expirationDate</code>. Produtos de <code>cleaning</code> usam <code>weight</code> e <code>expirationDate</code>. O vencimento pode ser gerado automaticamente para 1 ano no futuro.</p>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/products</code></td><td>Criar produto</td></tr>
+          <tr><td>GET</td><td><code>/products</code></td><td>Listar todos e retornar total</td></tr>
+          <tr><td>GET</td><td><code>/products/:id</code></td><td>Buscar um produto</td></tr>
+          <tr><td>PATCH</td><td><code>/products/:id</code></td><td>Atualizar parcialmente</td></tr>
+          <tr><td>DELETE</td><td><code>/products/:id</code></td><td>Remover produto</td></tr>
+        </tbody></table>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Inicie o projeto Node, instale dependencias e configure <code>tsconfig.json</code>.</li>
+          <li>Crie <code>src/app.ts</code>, configure Express e <code>express.json()</code>.</li>
+          <li>Crie <code>interfaces.ts</code> com os tipos de produto.</li>
+          <li>Crie <code>database.ts</code> exportando o array <code>products</code>.</li>
+          <li>Crie a rota POST e valide campos obrigatorios antes de salvar.</li>
+          <li>Crie middleware para bloquear nome duplicado.</li>
+          <li>Crie GET geral retornando <code>{ total, products }</code>.</li>
+          <li>Crie middleware para validar <code>id</code> em GET/PATCH/DELETE.</li>
+          <li>Crie GET por id, PATCH parcial e DELETE.</li>
+          <li>Revise status codes e mensagens de erro.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li><code>name</code>, <code>price</code>, <code>section</code> e <code>weight</code> sao obrigatorios.</li>
+          <li><code>section</code> aceita apenas <code>food</code> ou <code>cleaning</code>.</li>
+          <li>Dois produtos nao podem ter o mesmo nome.</li>
+          <li>Id inexistente deve responder 404.</li>
+          <li>A rota GET geral deve responder <code>{ total, products }</code>.</li>
+        </ul>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Criar produto retorna 201.</label>
+          <label><input type="checkbox" data-key="c2" />Nome duplicado retorna erro.</label>
+          <label><input type="checkbox" data-key="c3" />GET lista total correto.</label>
+          <label><input type="checkbox" data-key="c4" />PATCH altera apenas campos enviados.</label>
+          <label><input type="checkbox" data-key="c5" />DELETE remove do array.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S6 - KImoveis</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../s5-filmes-typeorm/index.html">Anterior</a><a href="../../index.html">Inicio</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 6</div>
+        <h1>KImoveis</h1>
+        <p class="lead">Crie uma API imobiliaria completa com usuarios, login, categorias, enderecos, imoveis e agendamento de visitas.</p>
+        <div class="tagrow"><span class="tag">TypeORM</span><span class="tag">relacionamentos</span><span class="tag">JWT</span><span class="tag">soft delete</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code> e <code>express-async-errors</code>: API e erros async.</li>
+          <li><code>typescript</code> e <code>ts-node-dev</code>: desenvolvimento em TypeScript.</li>
+          <li><code>typeorm</code>, <code>reflect-metadata</code>, <code>pg</code> e <code>sqlite3</code>: ORM, PostgreSQL e testes.</li>
+          <li><code>dotenv</code>: variaveis de ambiente.</li>
+          <li><code>zod</code>: validacao e serializacao.</li>
+          <li><code>bcryptjs</code>: hash de senha.</li>
+          <li><code>jsonwebtoken</code>: autenticacao JWT.</li>
+          <li><code>jest</code>, <code>supertest</code> e <code>ts-jest</code>: testes de integracao, se forem exigidos.</li>
+        </ul>
+
+        <h2>Entidades</h2>
+        <ul>
+          <li><code>User</code>: name, email, password hash, admin, createdAt, updatedAt, deletedAt.</li>
+          <li><code>Address</code>: street, zipCode, number, city, state.</li>
+          <li><code>Category</code>: name unico.</li>
+          <li><code>RealEstate</code>: value, size, sold, address, category, schedules.</li>
+          <li><code>Schedule</code>: date, hour, user, realEstate.</li>
+        </ul>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Protecao</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/users</code></td><td>Publica</td><td>Criar usuario</td></tr>
+          <tr><td>GET</td><td><code>/users</code></td><td>Admin</td><td>Listar usuarios</td></tr>
+          <tr><td>PATCH</td><td><code>/users/:id</code></td><td>Admin ou dono</td><td>Atualizar usuario</td></tr>
+          <tr><td>DELETE</td><td><code>/users/:id</code></td><td>Admin</td><td>Soft delete</td></tr>
+          <tr><td>POST</td><td><code>/login</code></td><td>Publica</td><td>Login</td></tr>
+          <tr><td>POST</td><td><code>/categories</code></td><td>Admin</td><td>Criar categoria</td></tr>
+          <tr><td>GET</td><td><code>/categories</code></td><td>Publica</td><td>Listar categorias</td></tr>
+          <tr><td>GET</td><td><code>/categories/:id/realEstate</code></td><td>Publica</td><td>Imoveis da categoria</td></tr>
+          <tr><td>POST</td><td><code>/realEstate</code></td><td>Admin</td><td>Criar imovel</td></tr>
+          <tr><td>GET</td><td><code>/realEstate</code></td><td>Publica</td><td>Listar imoveis</td></tr>
+          <tr><td>POST</td><td><code>/schedules</code></td><td>Token</td><td>Agendar visita</td></tr>
+          <tr><td>GET</td><td><code>/schedules/realEstate/:id</code></td><td>Admin</td><td>Ver agenda do imovel</td></tr>
+        </tbody></table>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>Email de usuario e nome de categoria sao unicos.</li>
+          <li>Senha deve ser salva com hash e nunca retornar na resposta.</li>
+          <li>Usuario deletado nao pode fazer login.</li>
+          <li>Endereco nao pode repetir mesma combinacao de campos.</li>
+          <li>Agendamento so pode ser em dia util, das 08:00 as 18:00.</li>
+          <li>Um usuario nao pode agendar duas visitas no mesmo dia e horario.</li>
+          <li>Um imovel nao pode receber duas visitas no mesmo dia e horario.</li>
+          <li>Somente admin cria categoria, imovel e consulta agenda de imovel.</li>
+        </ul>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Configure TypeORM, decorators, <code>DATABASE_URL</code>, migrations e conexao de teste.</li>
+          <li>Crie entidades na ordem: <code>User</code>, <code>Address</code>, <code>Category</code>, <code>RealEstate</code>, <code>Schedule</code>.</li>
+          <li>Crie relacionamentos entre entidades e exporte tudo em <code>entities/index.ts</code>.</li>
+          <li>Crie migration inicial e valide se as tabelas foram geradas corretamente.</li>
+          <li>Crie schemas zod de entrada e saida para cada dominio.</li>
+          <li>Implemente usuarios: POST, GET admin, PATCH e DELETE soft delete.</li>
+          <li>Implemente login com bcrypt e JWT, bloqueando usuario deletado.</li>
+          <li>Implemente middlewares de token, admin, body, id existente e unicidade.</li>
+          <li>Implemente categorias e depois imoveis, porque imovel depende de categoria e endereco.</li>
+          <li>Implemente schedules por ultimo, validando dia util, horario e conflitos.</li>
+        </ol>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Admin consegue listar usuarios; comum nao consegue.</label>
+          <label><input type="checkbox" data-key="c2" />Soft delete impede novo delete e impede login.</label>
+          <label><input type="checkbox" data-key="c3" />Categoria duplicada retorna conflito.</label>
+          <label><input type="checkbox" data-key="c4" />Imovel cria endereco e vincula categoria.</label>
+          <label><input type="checkbox" data-key="c5" />Agenda bloqueia fim de semana, horario fora da regra e conflito.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,93 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>M4 S3 - KenzieVelopers</title>
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="topbar"><div class="shell"><a class="brand" href="../../index.html">Guias de Exercicios</a><nav class="nav"><a href="../s2-api-filmes-pg/index.html">Anterior</a><a href="../s4-usuarios-cursos/index.html">Proxima</a></nav></div></header>
+    <main class="shell">
+      <section class="hero">
+        <div class="eyebrow">Modulo 4 - Backend Express - Sprint 3</div>
+        <h1>Controle de Projetos - KenzieVelopers</h1>
+        <p class="lead">Crie uma API para desenvolvedores, informacoes extras e projetos. O foco e relacionamento 1:1 e 1:N no PostgreSQL.</p>
+        <div class="tagrow"><span class="tag">PostgreSQL</span><span class="tag">relacionamentos</span><span class="tag">Express</span><span class="tag">TypeScript</span></div>
+      </section>
+      <section class="content">
+        <h2>Dependencias principais</h2>
+        <ul>
+          <li><code>express</code> e <code>express-async-errors</code>: servidor e tratamento de erros async.</li>
+          <li><code>typescript</code> e <code>ts-node-dev</code>: desenvolvimento em TypeScript.</li>
+          <li><code>pg</code> e <code>pg-format</code>: PostgreSQL e queries dinamicas.</li>
+          <li><code>dotenv</code>: variaveis de ambiente.</li>
+          <li><code>jest</code>, <code>supertest</code> e <code>ts-jest</code>: testes de integracao, se forem exigidos.</li>
+        </ul>
+
+        <h2>Tabelas</h2>
+        <ul>
+          <li><code>developers</code>: id, name, email unico.</li>
+          <li><code>developerInfos</code>: id, developerSince, preferredOS, developerId unico.</li>
+          <li><code>projects</code>: id, name, description, repository, startDate, endDate, developerId.</li>
+        </ul>
+        <p><code>preferredOS</code> deve usar enum com <code>Windows</code>, <code>Linux</code> e <code>MacOS</code>.</p>
+
+        <h2>Relacionamentos</h2>
+        <ul>
+          <li>Um developer tem no maximo uma developerInfo.</li>
+          <li>Ao deletar developer, sua developerInfo deve ser deletada junto.</li>
+          <li>Um developer pode ter muitos projects.</li>
+          <li>Ao deletar developer, projects ficam com <code>developerId = NULL</code>.</li>
+        </ul>
+
+        <h2>Endpoints</h2>
+        <table><thead><tr><th>Metodo</th><th>Rota</th><th>Funcao</th></tr></thead><tbody>
+          <tr><td>POST</td><td><code>/developers</code></td><td>Criar developer</td></tr>
+          <tr><td>GET</td><td><code>/developers/:id</code></td><td>Buscar developer com info</td></tr>
+          <tr><td>PATCH</td><td><code>/developers/:id</code></td><td>Atualizar developer</td></tr>
+          <tr><td>DELETE</td><td><code>/developers/:id</code></td><td>Deletar developer</td></tr>
+          <tr><td>POST</td><td><code>/developers/:id/infos</code></td><td>Criar info extra</td></tr>
+          <tr><td>POST</td><td><code>/projects</code></td><td>Criar projeto</td></tr>
+          <tr><td>GET</td><td><code>/projects/:id</code></td><td>Buscar projeto</td></tr>
+          <tr><td>PATCH</td><td><code>/projects/:id</code></td><td>Atualizar projeto</td></tr>
+        </tbody></table>
+
+        <h2>Ordem de montagem</h2>
+        <ol class="steps">
+          <li>Crie <code>sql/createTables.sql</code> com enum <code>OS</code>, tabelas e relacionamentos.</li>
+          <li>Configure <code>.env</code>, conexao PostgreSQL e inicializacao do banco.</li>
+          <li>Monte a base Express com <code>app.ts</code>, <code>server.ts</code> e middleware global de erros.</li>
+          <li>Crie a estrutura <code>routers</code>, <code>controllers</code>, <code>services</code>, <code>middlewares</code> e <code>interfaces</code>.</li>
+          <li>Implemente <code>/developers</code>: criar, listar por id, atualizar e deletar.</li>
+          <li>Adicione middlewares de email duplicado e developer inexistente.</li>
+          <li>Implemente <code>/developers/:id/infos</code> validando OS e info duplicada.</li>
+          <li>Implemente <code>/projects</code> e valide developerId quando enviado.</li>
+          <li>Implemente GET/PATCH de projects validando id inexistente.</li>
+          <li>Revise retornos, status codes e efeitos dos relacionamentos no banco.</li>
+        </ol>
+
+        <h2>Regras de aceite</h2>
+        <ul>
+          <li>Email de developer deve ser unico.</li>
+          <li>Developer inexistente deve retornar 404 em GET, PATCH, DELETE e criacao de info.</li>
+          <li>Cada developer pode ter apenas uma info extra.</li>
+          <li><code>preferredOS</code> aceita somente <code>Windows</code>, <code>Linux</code> ou <code>MacOS</code>.</li>
+          <li>Projeto deve aceitar <code>developerId</code> existente ou ficar sem developer.</li>
+          <li>Ao deletar developer, info some junto e projects ficam com <code>developerId</code> nulo.</li>
+        </ul>
+
+        <h2>Checklist</h2>
+        <div class="checklist">
+          <label><input type="checkbox" data-key="c1" />Email duplicado bloqueia POST/PATCH.</label>
+          <label><input type="checkbox" data-key="c2" />Developer so aceita uma info.</label>
+          <label><input type="checkbox" data-key="c3" />OS invalido retorna erro.</label>
+          <label><input type="checkbox" data-key="c4" />Projeto pode ser criado com developer existente.</label>
+          <label><input type="checkbox" data-key="c5" />Delete de developer respeita cascade e set null.</label>
+        </div>
+      </section>
+    </main>
+    <script src="../../assets/app.js"></script>
+  </body>
+</html>
+
