@@ -1,18 +1,1 @@
-document.querySelectorAll(".checklist input").forEach((input) => {
-  const key = `${location.pathname}:${input.dataset.key || input.value}`;
-  input.checked = localStorage.getItem(key) === "1";
-  input.addEventListener("change", () => {
-    localStorage.setItem(key, input.checked ? "1" : "0");
-  });
-});
-
-let rafId = 0;
-document.addEventListener("pointermove", (event) => {
-  if (rafId) return;
-
-  rafId = requestAnimationFrame(() => {
-    document.documentElement.style.setProperty("--mouse-x", `${event.clientX}px`);
-    document.documentElement.style.setProperty("--mouse-y", `${event.clientY}px`);
-    rafId = 0;
-  });
-});
+document.querySelectorAll(".checklist input").forEach((input)=>{const key=`${location.pathname}:${input.dataset.key||input.value}`;input.checked=localStorage.getItem(key)==="1";input.addEventListener("change",()=>{localStorage.setItem(key,input.checked?"1":"0")})});let rafId=0;document.addEventListener("pointermove",(event)=>{if(rafId)return;rafId=requestAnimationFrame(()=>{document.documentElement.style.setProperty("--mouse-x",`${event.clientX}px`);document.documentElement.style.setProperty("--mouse-y",`${event.clientY}px`);rafId=0})});
