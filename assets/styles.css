@@ -16,6 +16,8 @@
   --shadow-soft: 0 14px 34px rgba(31, 41, 55, 0.09);
   --mouse-x: 50%;
   --mouse-y: 18%;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @property --angle {
@@ -80,6 +82,9 @@ a {
   color: var(--accent);
   font-weight: 850;
   text-decoration: none;
+  transition:
+    color 260ms var(--ease-out),
+    text-decoration-color 260ms var(--ease-out);
 }
 
 a:hover {
@@ -89,6 +94,11 @@ a:hover {
 .shell {
   margin: 0 auto;
   width: min(1180px, calc(100% - 36px));
+}
+
+main.shell {
+  padding-bottom: 72px;
+  padding-top: 34px;
 }
 
 .topbar {
@@ -156,10 +166,11 @@ a:hover {
   padding: 9px 14px;
   position: relative;
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease;
+    transform 340ms var(--ease-out),
+    box-shadow 340ms var(--ease-out),
+    border-color 340ms var(--ease-out),
+    background-color 340ms var(--ease-out),
+    color 260ms var(--ease-out);
 }
 
 .nav a:hover {
@@ -171,7 +182,8 @@ a:hover {
 }
 
 .hero {
-  padding: 64px 0 34px;
+  margin-bottom: 42px;
+  padding: 72px 28px 42px;
   position: relative;
 }
 
@@ -184,7 +196,7 @@ a:hover {
   border-radius: 36px;
   box-shadow: var(--shadow);
   content: "";
-  inset: 30px -28px 2px;
+  inset: 22px 0 0;
   position: absolute;
   z-index: -1;
 }
@@ -228,8 +240,10 @@ a:hover {
 }
 
 h1 {
-  background: linear-gradient(100deg, #111827 0%, #174ea6 46%, #9d174d 100%);
+  animation: title-colors 6s ease-in-out infinite alternate;
+  background: linear-gradient(100deg, #111827 0%, #174ea6 34%, #9d174d 50%, #174ea6 66%, #111827 100%);
   background-clip: text;
+  background-size: 240% 100%;
   color: transparent;
   font-size: clamp(42px, 7vw, 82px);
   font-weight: 950;
@@ -291,6 +305,72 @@ p {
   grid-template-columns: 1fr;
 }
 
+main > section {
+  scroll-margin-top: 112px;
+}
+
+.download-panel {
+  align-items: center;
+  backdrop-filter: blur(18px) saturate(140%);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  gap: 18px;
+  justify-content: space-between;
+  margin: 0 0 58px;
+  overflow: hidden;
+  padding: 22px;
+  position: relative;
+}
+
+.download-panel::before {
+  animation: rainbow-slide 8s linear infinite;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent-4), var(--accent-5), var(--accent));
+  background-size: 260% 100%;
+  content: "";
+  inset: 0 0 auto;
+  height: 4px;
+  position: absolute;
+}
+
+.download-panel h2 {
+  border: 0;
+  margin: 0 0 4px;
+  padding: 0;
+}
+
+.download-panel p {
+  color: var(--muted);
+  margin: 0;
+}
+
+.download-button {
+  align-items: center;
+  animation: button-breathe 3s ease-in-out infinite;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.96), rgba(6, 182, 212, 0.96), rgba(236, 72, 153, 0.92));
+  background-size: 220% 220%;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.2);
+  color: white;
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding: 12px 18px;
+  transition:
+    transform 340ms var(--ease-out),
+    box-shadow 340ms var(--ease-out),
+    filter 340ms var(--ease-out);
+}
+
+.download-button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.24);
+  text-decoration: none;
+  transform: translateY(-2px) scale(1.015);
+}
+
 .card,
 .content {
   backdrop-filter: blur(20px) saturate(140%);
@@ -335,12 +415,16 @@ p {
 
 .card {
   color: var(--ink);
+  display: block;
   min-height: 210px;
   padding: 26px;
+  text-decoration: none;
   transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    filter 180ms ease;
+    transform 440ms var(--ease-soft),
+    box-shadow 440ms var(--ease-soft),
+    border-color 440ms var(--ease-soft),
+    background-color 440ms var(--ease-soft),
+    filter 440ms var(--ease-soft);
 }
 
 .card > * {
@@ -354,7 +438,8 @@ p {
     0 30px 86px rgba(31, 41, 55, 0.17),
     0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   filter: saturate(1.08);
-  transform: translateY(-7px);
+  transform: translateY(-6px) scale(1.01);
+  text-decoration: none;
 }
 
 .card:hover::before {
@@ -365,6 +450,9 @@ p {
   opacity: 1;
   padding: 2px;
   animation: spin-border 2.8s linear infinite;
+  transition:
+    opacity 440ms var(--ease-soft),
+    filter 440ms var(--ease-soft);
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -397,7 +485,7 @@ p {
   color: var(--ink);
 }
 
-.card a {
+.card-action {
   align-items: center;
   animation: button-breathe 3s ease-in-out infinite;
   background:
@@ -410,18 +498,21 @@ p {
   display: inline-flex;
   margin-top: 16px;
   padding: 10px 16px;
+  transition:
+    transform 340ms var(--ease-out),
+    box-shadow 340ms var(--ease-out),
+    filter 340ms var(--ease-out);
 }
 
-.card a::after {
+.card:hover .card-action {
+  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.24);
+  transform: translateY(-1px);
+}
+
+.card-action::after {
   content: ">";
   font-weight: 950;
   margin-left: 9px;
-}
-
-.card a:hover {
-  filter: brightness(1.12);
-  text-decoration: none;
-  transform: translateY(-1px);
 }
 
 .meta {
@@ -445,10 +536,6 @@ p {
   font-size: 12px;
   font-weight: 950;
   padding: 8px 11px;
-}
-
-main.shell {
-  padding-bottom: 58px;
 }
 
 ul,
@@ -495,12 +582,17 @@ li {
   margin: 13px 0;
   padding: 16px 18px 16px 68px;
   position: relative;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 360ms var(--ease-out),
+    box-shadow 360ms var(--ease-out),
+    border-color 360ms var(--ease-out),
+    background-color 360ms var(--ease-out);
 }
 
 .steps li:hover {
+  border-color: rgba(37, 99, 235, 0.22);
   box-shadow: 0 18px 44px rgba(37, 99, 235, 0.12);
-  transform: translateX(4px);
+  transform: translateX(5px);
 }
 
 .steps li::before {
@@ -712,6 +804,15 @@ th:last-child {
   }
 }
 
+@keyframes title-colors {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -740,11 +841,12 @@ th:last-child {
   }
 
   .hero {
-    padding-top: 44px;
+    margin-bottom: 34px;
+    padding-top: 58px;
   }
 
   .hero::before {
-    inset: 24px -14px 0;
+    inset: 18px 0 0;
     border-radius: 24px;
   }
 }
@@ -754,9 +856,36 @@ th:last-child {
     width: min(100% - 22px, 1180px);
   }
 
+  main.shell {
+    padding-top: 24px;
+  }
+
   .content {
     border-radius: 18px;
     padding: 18px;
+  }
+
+  .hero {
+    margin-bottom: 28px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 32px;
+    padding-top: 46px;
+  }
+
+  .hero::before {
+    inset: 12px 0 0;
+  }
+
+  .download-panel {
+    align-items: stretch;
+    flex-direction: column;
+    margin-bottom: 42px;
+  }
+
+  .download-button {
+    justify-content: center;
+    width: 100%;
   }
 
   h1 {
